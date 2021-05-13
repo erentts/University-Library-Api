@@ -2,8 +2,10 @@ import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
+import { useHistory } from "react-router-dom";
 
 function CreateBook() {
+  let history = useHistory();
   const initialValues = {
     name: "",
     isbn: "",
@@ -24,9 +26,10 @@ function CreateBook() {
 
   const onSubmit = (data) => {
     axios.post("http://localhost:3001/books", data).then((response) => {
-      console.log("IT WORKED");
+      history.push("/");
     });
   };
+
   return (
     <div className="createBookPage">
       <Formik
