@@ -9,7 +9,9 @@ router.get("/", async (req, res) => {
 
 router.post("/", async (req, res) => {
   const book = req.body;
-  await Books.create(book);
+  await Books.create(book).catch((e) => {
+    console.log(e);
+  });
   res.json(book);
 });
 

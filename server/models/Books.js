@@ -12,6 +12,18 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    materialType: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    isAvailable: {
+      type: DataTypes.TINYINT,
+      allowNull: false,
+    },
+    isReservation: {
+      type: DataTypes.TINYINT,
+      allowNull: false,
+    },
   });
 
   return Books;

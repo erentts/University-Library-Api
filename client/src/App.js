@@ -1,27 +1,19 @@
 import "./App.css";
-import axios from "axios";
-import { useEffect, useState } from "react";
+import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
+import Home from "./pages/Home";
+import CreateBook from "./pages/CreateBook";
 
 function App() {
-  const [listOfBooks, setListOfBooks] = useState([]);
-
-  useEffect(() => {
-    axios.get("http://localhost:3001/books").then((response) => {
-      setListOfBooks(response.data);
-    });
-  }, []);
-
   return (
     <div className="App">
-      {listOfBooks.map((value, key) => {
-        return (
-          <div className="book">
-            <div className="name"> {value.name}</div>
-            <div className="isbn"> {value.isbn}</div>
-            <div className="author"> {value.author}</div>
-          </div>
-        );
-      })}
+      <Router>
+        <Link to="/createbook">Create A Book</Link>
+        <Link to="/">Home Page</Link>
+        <Switch>
+          <Route path="/" exact component={Home} />
+          <Route path="/createbook" exact component={CreateBook} />
+        </Switch>
+      </Router>
     </div>
   );
 }
