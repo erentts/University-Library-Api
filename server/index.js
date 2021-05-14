@@ -10,7 +10,9 @@ const db = require("./models");
 // Routers
 
 const bookRouter = require("./routes/Books");
+const cardRouter = require("./routes/Cards");
 app.use("/books", bookRouter);
+app.use("/cards", cardRouter);
 
 db.sequelize.sync().then(() => {
   app.listen(3001, () => {
