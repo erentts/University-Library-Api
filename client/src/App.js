@@ -5,6 +5,7 @@ import Books from "./pages/Books";
 import CreateBook from "./pages/CreateBook";
 import Book from "./pages/Book";
 import Cards from "./pages/Cards";
+import CreateCard from "./pages/CreateCard";
 
 function App() {
   return (
@@ -15,12 +16,14 @@ function App() {
           <Link to="/books">Books Page</Link>
           <Link to="/cards"> Cards Page</Link>
           <Link to="/createbook"> Create A Book</Link>
+          <Link to="/createcard"> Create A Card</Link>
         </div>
         <Switch>
           <Route path="/books" exact component={Books} />
           <Route path="/createbook" exact component={CreateBook} />
           <Route path="/book/:id" exact component={Book} />
           <Route path="/cards" exact component={Cards} />
+          <Route path="/createcard" exact component={CreateCard} />
         </Switch>
       </Router>
     </div>
