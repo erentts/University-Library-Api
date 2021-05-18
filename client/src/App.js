@@ -8,6 +8,8 @@ import Cards from "./pages/Cards";
 import CreateCard from "./pages/CreateCard";
 import ReceivedBooks from "./pages/ReceivedBooks";
 import CreateReceivedBooks from "./pages/CreateReceivedBooks";
+import ReservedBooks from "./pages/ReservedBooks";
+import CreateReservedBooks from "./pages/CreateReservedBooks";
 
 function App() {
   return (
@@ -18,9 +20,11 @@ function App() {
           <Link to="/books">Books Page</Link>
           <Link to="/cards"> Cards Page</Link>
           <Link to="/receivedbooks"> Received Books Page</Link>
+          <Link to="/reservedbooks"> Reserved Books Page</Link>
           <Link to="/createbook"> Create A Book</Link>
           <Link to="/createcard"> Create A Card</Link>
           <Link to="/borrowbook"> Borrow A Book</Link>
+          <Link to="/reservebook"> Reserve A Book</Link>
         </div>
         <Switch>
           <Route path="/books" exact component={Books} />
@@ -30,6 +34,8 @@ function App() {
           <Route path="/createcard" exact component={CreateCard} />
           <Route path="/receivedbooks" exact component={ReceivedBooks} />
           <Route path="/borrowbook" exact component={CreateReceivedBooks} />
+          <Route path="/reservedbooks" exact component={ReservedBooks} />
+          <Route path="/reservebook" exact component={CreateReservedBooks} />
         </Switch>
       </Router>
     </div>

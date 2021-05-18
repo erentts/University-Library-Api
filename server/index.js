@@ -12,9 +12,11 @@ const db = require("./models");
 const bookRouter = require("./routes/Books");
 const cardRouter = require("./routes/Cards");
 const receivedBookRouter = require("./routes/ReceivedBooks");
+const reservedBookRouter = require("./routes/ReservedBooks");
 app.use("/books", bookRouter);
 app.use("/cards", cardRouter);
 app.use("/receivedbooks", receivedBookRouter);
+app.use("/reservedbooks", reservedBookRouter);
 
 db.sequelize.sync().then(() => {
   app.listen(3001, () => {
