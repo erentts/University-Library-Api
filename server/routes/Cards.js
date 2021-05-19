@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { Cards } = require("../models");
+const { validateToken } = require("../middlewares/AuthMiddleware");
 
 router.get("/", async (req, res) => {
   const listOfCards = await Cards.findAll();
@@ -13,7 +14,7 @@ router.get("/byId/:id", async (req, res) => {
   res.json(card);
 });
 
-router.post("/", async (req, res) => {
+router.post("/", validateToken, async (req, res) => {
   const card = req.body;
   await Cards.create(card).catch((e) => {
     console.log(e);

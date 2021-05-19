@@ -3,24 +3,8 @@ const router = express.Router();
 const { Users } = require("../models");
 const bcrypt = require("bcrypt");
 
-/*router.get("/", async (req, res) => {
-  const listOfUsers = await Users.findAll(); // findAll : sequalize method
-  res.json(listOfUsers);
-});
+const { sign } = require("jsonwebtoken");
 
-router.get("/byId/:id", async (req, res) => {
-  const id = req.params.id;
-  const user = await Users.findByPk(id);
-  res.json(user);
-});
-
-router.post("/", async (req, res) => {
-  const user = req.body;
-  await Users.create(user).catch((e) => {
-    console.log(e);
-  });
-  res.json(user);
-});*/
 router.post("/", async (req, res) => {
   const {
     username,
@@ -62,7 +46,12 @@ router.post("/login", async (req, res) => {
       res.json({ error: "Wrong Email and Password Combination" });
     }
 
-    res.json("YOU LOGGED IN !");
+    const accessToken = sign(
+      { email: user.email, id: user.id },
+      "importantsecret"
+    );
+
+    res.json(accessToken);
   });
 });
 

@@ -19,9 +19,17 @@ function CreateCard() {
   });
 
   const onSubmit = (data) => {
-    axios.post("http://localhost:3001/cards", data).then((response) => {
-      history.push("/");
-    });
+    axios
+      .post("http://localhost:3001/cards", data, {
+        headers: { accessToken: sessionStorage.getItem("accessToken") },
+      })
+      .then((response) => {
+        if (response.data.error) {
+          alert(response.data.error);
+        } else {
+          history.push("/");
+        }
+      });
   };
 
   return (
