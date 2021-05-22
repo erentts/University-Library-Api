@@ -12,38 +12,63 @@ import ReservedBooks from "./pages/ReservedBooks";
 import CreateReservedBooks from "./pages/CreateReservedBooks";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
+import { AuthContext } from "./helpers/AuthContext";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 function App() {
+  const [authState, setAuthState] = useState(false);
+  useEffect(() => {
+    axios
+      .get("http://localhost:3001/auth/auth", {
+        headers: {
+          accessToken: localStorage.getItem("accessToken"),
+        },
+      })
+      .then((response) => {
+        if (response.data.error) {
+          setAuthState(false);
+        } else {
+          setAuthState(true);
+        }
+      });
+  }, []);
   return (
     <div className="App">
-      <Router>
-        <div className="navbar">
-          {/* Comment Line */}
-          <Link to="/books">Books Page</Link>
-          <Link to="/cards"> Cards Page</Link>
-          <Link to="/receivedbooks"> Received Books Page</Link>
-          <Link to="/reservedbooks"> Reserved Books Page</Link>
-          <Link to="/createbook"> Create A Book</Link>
-          <Link to="/createcard"> Create A Card</Link>
-          <Link to="/borrowbook"> Borrow A Book</Link>
-          <Link to="/reservebook"> Reserve A Book</Link>
-          <Link to="/login"> Login</Link>
-          <Link to="/register"> Register</Link>
-        </div>
-        <Switch>
-          <Route path="/books" exact component={Books} />
-          <Route path="/createbook" exact component={CreateBook} />
-          <Route path="/book/:id" exact component={Book} />
-          <Route path="/cards" exact component={Cards} />
-          <Route path="/createcard" exact component={CreateCard} />
-          <Route path="/receivedbooks" exact component={ReceivedBooks} />
-          <Route path="/borrowbook" exact component={CreateReceivedBooks} />
-          <Route path="/reservedbooks" exact component={ReservedBooks} />
-          <Route path="/reservebook" exact component={CreateReservedBooks} />
-          <Route path="/register" exact component={Register} />
-          <Route path="/login" exact component={Login} />
-        </Switch>
-      </Router>
+      <AuthContext.Provider value={{ authState, setAuthState }}>
+        <Router>
+          <div className="navbar">
+            {/* Comment Line */}
+            <Link to="/books">Books Page</Link>
+            <Link to="/cards"> Cards Page</Link>
+            <Link to="/receivedbooks"> Received Books Page</Link>
+            <Link to="/reservedbooks"> Reserved Books Page</Link>
+            <Link to="/createbook"> Create A Book</Link>
+            <Link to="/createcard"> Create A Card</Link>
+            <Link to="/borrowbook"> Borrow A Book</Link>
+            <Link to="/reservebook"> Reserve A Book</Link>
+            {!authState && (
+              <>
+                <Link to="/login"> Login</Link>
+                <Link to="/register"> Register</Link>
+              </>
+            )}
+          </div>
+          <Switch>
+            <Route path="/books" exact component={Books} />
+            <Route path="/createbook" exact component={CreateBook} />
+            <Route path="/book/:id" exact component={Book} />
+            <Route path="/cards" exact component={Cards} />
+            <Route path="/createcard" exact component={CreateCard} />
+            <Route path="/receivedbooks" exact component={ReceivedBooks} />
+            <Route path="/borrowbook" exact component={CreateReceivedBooks} />
+            <Route path="/reservedbooks" exact component={ReservedBooks} />
+            <Route path="/reservebook" exact component={CreateReservedBooks} />
+            <Route path="/register" exact component={Register} />
+            <Route path="/login" exact component={Login} />
+          </Switch>
+        </Router>
+      </AuthContext.Provider>
     </div>
   );
 }

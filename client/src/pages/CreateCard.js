@@ -21,11 +21,11 @@ function CreateCard() {
   const onSubmit = (data) => {
     axios
       .post("http://localhost:3001/cards", data, {
-        headers: { accessToken: sessionStorage.getItem("accessToken") },
+        headers: { accessToken: localStorage.getItem("accessToken") },
       })
       .then((response) => {
         if (response.data.error) {
-          alert(response.data.error);
+          console.log(response.data.error);
         } else {
           history.push("/");
         }
