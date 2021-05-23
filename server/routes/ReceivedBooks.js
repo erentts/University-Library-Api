@@ -53,7 +53,7 @@ router.delete("/deletebyuser/:isbn", validateToken, async (req, res) => {
     });
 
     const mailOptions = {
-      from: "yazmuhdeneme@gmail.com>",
+      from: "yazmuhdeneme@gmail.com",
       to: findUser.email,
       subject: `Rezerve Edilen Kitap`,
       text: `Rezerve ettiginiz kitap kutuphaneye ulasmistir.Teslim alabilirsiniz..`,
