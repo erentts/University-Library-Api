@@ -14,6 +14,13 @@ router.get("/byId/:id", async (req, res) => {
   res.json(card);
 });
 
+router.get("/cardbyuser", validateToken, async (req, res) => {
+  const cardbyuser = await Cards.findOne({
+    where: { userId: req.user.userId },
+  });
+  res.json(cardbyuser);
+});
+
 router.post("/", validateToken, async (req, res) => {
   const card = req.body;
   await Cards.create(card).catch((e) => {

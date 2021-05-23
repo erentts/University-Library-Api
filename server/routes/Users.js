@@ -48,11 +48,22 @@ router.post("/login", async (req, res) => {
     }
 
     const accessToken = sign(
-      { email: user.email, id: user.id },
+      {
+        email: user.email,
+        id: user.id,
+        userId: user.userId,
+        userType: user.userType,
+      },
       "importantsecret"
     );
 
-    res.json(accessToken);
+    res.json({
+      token: accessToken,
+      email: user.email,
+      id: user.id,
+      userId: user.userId,
+      userType: user.userType,
+    });
   });
 });
 

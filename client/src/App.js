@@ -17,7 +17,11 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 function App() {
-  const [authState, setAuthState] = useState(false);
+  const [authState, setAuthState] = useState({
+    email: "",
+    id: 0,
+    status: false,
+  });
   useEffect(() => {
     axios
       .get("http://localhost:3001/auth/auth", {
@@ -27,12 +31,21 @@ function App() {
       })
       .then((response) => {
         if (response.data.error) {
-          setAuthState(false);
+          setAuthState({ ...authState, status: false });
         } else {
-          setAuthState(true);
+          setAuthState({
+            email: response.data.email,
+            id: response.data.id,
+            status: true,
+          });
         }
       });
   }, []);
+
+  const logout = () => {
+    localStorage.removeItem("accessToken");
+    setAuthState({ email: "", id: 0, status: false });
+  };
   return (
     <div className="App">
       <AuthContext.Provider value={{ authState, setAuthState }}>
@@ -47,12 +60,16 @@ function App() {
             <Link to="/createcard"> Create A Card</Link>
             <Link to="/borrowbook"> Borrow A Book</Link>
             <Link to="/reservebook"> Reserve A Book</Link>
-            {!authState && (
+            {!authState.status ? (
               <>
                 <Link to="/login"> Login</Link>
                 <Link to="/register"> Register</Link>
               </>
+            ) : (
+              <button onClick={logout}>Logout</button>
             )}
+
+            <h6>{authState.username}</h6>
           </div>
           <Switch>
             <Route path="/books" exact component={Books} />
