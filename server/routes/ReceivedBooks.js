@@ -41,19 +41,19 @@ router.delete("/deletebyuser/:isbn", validateToken, async (req, res) => {
     const findUser = await Users.findOne({
       where: { userId: reservedBook.userId },
     });
-    // send mail to findUser.email
+
+    // SEND MAIL TO findUser.email
 
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
-        user: "erentutus56@gmail.com",
-        pass: "",
+        user: "yazmuhdeneme@gmail.com",
+        pass: "123456Yazmuh",
       },
     });
 
     const mailOptions = {
-      // Ben domain'imi yandex'e bağladığım için cagatay.me olarak belirttim.
-      from: "erentutus56@gmail.com>",
+      from: "yazmuhdeneme@gmail.com>",
       to: findUser.email,
       subject: `Rezerve Edilen Kitap`,
       text: `Rezerve ettiginiz kitap kutuphaneye ulasmistir.Teslim alabilirsiniz..`,
