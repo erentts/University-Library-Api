@@ -44,12 +44,18 @@ router.post("/", validateToken, async (req, res) => {
   const getBookType = await Books.findOne({
     where: { isbn: req.body.isbn },
   });
+  const getAdminRules = await Administrators.findOne({
+    where: { email: "yazmuhdeneme@gmail.com" },
+  });
 
   if (getBookType.isAvailable == 0) {
     if (req.user.userType == "Öğrenci" || req.user.userType == "Memur") {
-      if (Object.keys(getBooksByUser).length == 3) {
+      if (
+        Object.keys(getBooksByUser).length ==
+        getAdminRules.studentAndOfficerMaxBooksCount
+      ) {
         res.json(
-          "Toplamda rezerve ettiğiniz kitap sayısı en fazla 3 olmalıdır"
+          `Toplamda rezerve ettiğiniz kitap sayısı en fazla ${getAdminRules.studentAndOfficerMaxBooksCount} olmalıdır`
         );
       } else if (getBookType.materialType == "Ders Kitabı") {
         res.json(
@@ -66,9 +72,12 @@ router.post("/", validateToken, async (req, res) => {
       }
     }
     if (req.user.userType == "Öğretim Üyesi") {
-      if (Object.keys(getBooksByUser).length == 6) {
+      if (
+        Object.keys(getBooksByUser).length ==
+        getAdminRules.academicianMonthMaxBooksCount
+      ) {
         res.json(
-          "Toplamda rezerve ettiğiniz kitap sayısı en fazla 6 olmalıdır"
+          `Toplamda rezerve ettiğiniz kitap sayısı en fazla ${getAdminRules.academicianMonthMaxBooksCount} olmalıdır`
         );
       } else {
         await ReservedBooks.create(reservedBook).catch((e) => {

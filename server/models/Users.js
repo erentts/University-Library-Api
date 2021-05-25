@@ -24,14 +24,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    reservedBooksCount: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
-    receivedBooksCount: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
     email: {
       type: DataTypes.STRING,
       allowNull: false,

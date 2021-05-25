@@ -1,6 +1,12 @@
 const express = require("express");
 const router = express.Router();
-const { ReceivedBooks, Books, Users, ReservedBooks } = require("../models");
+const {
+  ReceivedBooks,
+  Books,
+  Users,
+  ReservedBooks,
+  Administrators,
+} = require("../models");
 const { validateToken } = require("../middlewares/AuthMiddleware");
 const nodemailer = require("nodemailer");
 
@@ -77,10 +83,18 @@ router.post("/", validateToken, async (req, res) => {
   const getBookType = await Books.findOne({
     where: { isbn: req.body.isbn },
   });
-  if (getBookType.isAvailable == 1 || getBookType.isReservation == 1) {
+  const getAdminRules = await Administrators.findOne({
+    where: { email: "yazmuhdeneme@gmail.com" },
+  });
+  if (getBookType.isAvailable == 1) {
     if (req.user.userType == "Öğrenci" || req.user.userType == "Memur") {
-      if (Object.keys(getBooksByUser).length == 3) {
-        res.json("Toplamda sahip olduğunuz kitap sayısı en fazla 3 olmalıdır.");
+      if (
+        Object.keys(getBooksByUser).length ==
+        getAdminRules.studentAndOfficerMaxBooksCount
+      ) {
+        res.json(
+          `Toplamda sahip olduğunuz kitap sayısı en fazla ${getAdminRules.studentAndOfficerMaxBooksCount} olmalıdır.`
+        );
       } else if (getBookType.materialType == "Ders Kitabı") {
         res.json(
           "Ders Kitabı materyalini sadece öğretim üyeleri alabilmektedir"
@@ -98,8 +112,13 @@ router.post("/", validateToken, async (req, res) => {
       }
     }
     if (req.user.userType == "Öğretim Üyesi") {
-      if (Object.keys(getBooksByUser).length == 6) {
-        res.json("Toplamda sahip olduğunuz kitap sayısı en fazla 6 olmalıdır.");
+      if (
+        Object.keys(getBooksByUser).length ==
+        getAdminRules.academicianMonthMaxBooksCount
+      ) {
+        res.json(
+          `Toplamda sahip olduğunuz kitap sayısı en fazla ${getAdminRules.academicianMonthMaxBooksCount} olmalıdır.`
+        );
       } else if (getBookType.isAvailable == 0) {
         res.json("Bu kitap başka bir kişidedir.");
       } else {
@@ -113,7 +132,7 @@ router.post("/", validateToken, async (req, res) => {
       }
     }
   } else {
-    res.json("Kitap baskasinda veya rezerve edilmis oldugu icin alamazsiniz");
+    res.json("Kitap baskasinda oldugu icin alamazsiniz");
   }
 });
 
