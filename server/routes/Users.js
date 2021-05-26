@@ -30,7 +30,7 @@ router.post("/", async (req, res) => {
       receivedBooksCount,
       email,
     });
-    res.json("SUCCESS");
+    res.json("SUCCESSs");
   });
 });
 
