@@ -86,6 +86,8 @@ router.post("/", validateToken, async (req, res) => {
   const getAdminRules = await Administrators.findOne({
     where: { email: "yazmuhdeneme@gmail.com" },
   });
+  console.log(getBookType);
+  console.log(getAdminRules);
   if (getBookType.isAvailable == 1) {
     if (req.user.userType == "Öğrenci" || req.user.userType == "Memur") {
       if (

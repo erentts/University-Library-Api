@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { ReservedBooks, Books } = require("../models");
+const { ReservedBooks, Books, Administrators } = require("../models");
 const { validateToken } = require("../middlewares/AuthMiddleware");
 
 router.get("/", async (req, res) => {
@@ -48,6 +48,7 @@ router.post("/", validateToken, async (req, res) => {
     where: { email: "yazmuhdeneme@gmail.com" },
   });
 
+  console.log(getAdminRules);
   if (getBookType.isAvailable == 0) {
     if (req.user.userType == "Öğrenci" || req.user.userType == "Memur") {
       if (
