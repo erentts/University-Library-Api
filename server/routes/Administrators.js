@@ -71,6 +71,11 @@ router.get("/byId/:id", validateToken, async (req, res) => {
   res.json(administrators);
 });
 
+router.get("/", async (req, res) => {
+  const administrators = await Administrators.findAll();
+  res.json(administrators);
+});
+
 router.put("/update/:id", validateToken, async (req, res) => {
   const {
     studentAndOfficerMonth,
