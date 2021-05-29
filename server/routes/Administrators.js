@@ -93,7 +93,7 @@ router.put("/update/:id", validateToken, async (req, res) => {
     academicianMonthMaxBooksCount: academicianMonthMaxBooksCount,
   });
 
-  res.json("Update successful !");
+  res.json("Güncelleme başarıyla gerçekleşti");
 });
 
 module.exports = router;

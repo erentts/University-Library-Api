@@ -33,7 +33,7 @@ router.delete("/deletebyuser/:isbn", validateToken, async (req, res) => {
   setAvailable.update({
     isReservation: 1,
   });
-  res.json("Silme basarili");
+  res.json("Rezervasyon işlemi iptal edildi");
 });
 
 router.post("/", validateToken, async (req, res) => {
@@ -69,7 +69,7 @@ router.post("/", validateToken, async (req, res) => {
         getBookType.update({
           isReservation: 0,
         });
-        res.json(reservedBook);
+        res.json("Kitap rezerve edildi");
       }
     }
     if (req.user.userType == "Öğretim Üyesi") {
@@ -87,7 +87,7 @@ router.post("/", validateToken, async (req, res) => {
         getBookType.update({
           isReservation: 0,
         });
-        res.json(reservedBook);
+        res.json("Kitap rezerve edildi");
       }
     }
   } else {

@@ -29,4 +29,16 @@ router.post("/", validateToken, async (req, res) => {
   res.json(card);
 });
 
+router.put("/update/:id", validateToken, async (req, res) => {
+  const { balance } = req.body;
+  const id = req.params.id;
+  const cards = await Cards.findByPk(id);
+
+  cards.update({
+    balance: balance,
+  });
+
+  res.json("Güncelleme başarıyla gerçekleşti");
+});
+
 module.exports = router;

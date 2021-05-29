@@ -72,7 +72,7 @@ router.delete("/deletebyuser/:isbn", validateToken, async (req, res) => {
       console.log("Email sent: " + info.response);
     });
   }
-  res.json("Silme basarili");
+  res.json("Kitap iade edildi");
 });
 
 router.post("/", validateToken, async (req, res) => {
@@ -110,7 +110,7 @@ router.post("/", validateToken, async (req, res) => {
         getBookType.update({
           isAvailable: 0,
         });
-        res.json(receivedBook);
+        res.json("Kitap teslim alındı");
       }
     }
     if (req.user.userType == "Öğretim Üyesi") {
@@ -130,7 +130,7 @@ router.post("/", validateToken, async (req, res) => {
         getBookType.update({
           isAvailable: 0,
         });
-        res.json(receivedBook);
+        res.json("Kitap teslim alındı");
       }
     }
   } else {
