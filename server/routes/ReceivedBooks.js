@@ -54,7 +54,7 @@ router.delete("/deletebyuser/:isbn", validateToken, async (req, res) => {
       service: "gmail",
       auth: {
         user: "yazmuhdeneme@gmail.com",
-        pass: "123456Yazmuh",
+        pass: "",
       },
     });
 
